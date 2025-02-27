@@ -2,32 +2,6 @@
 session_start();
 $method = $_SERVER["REQUEST_METHOD"];
 
-if ($method === "POST") {
-    try {
-        if ($_POST["token"] !== "b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3") {
-            $_SESSION["error"] = "De token is incorrect";
-        } else {
-            $host = "localhost";
-            // voor Thom, verander de $username naar root, je gebruikt MAMP
-            $username = "";
-            $password = "root";
-            // Voor Thom, verander de $database naar de databse die jij gebruikt
-            $database = "web";
-
-            $connection = new mysqli($host, $username, $password);
-
-            if ($connection->connect_error) {
-                throw new Exception($connection->error);
-            };
-
-            
-        }
-    } catch (Exception $e) {
-        echo "de error is: " . $e->getMessage();
-    }
-}
-
-
 if (isset($_SESSION["error"])) {
     echo "<div class='error'>";
     echo $_SESSION["error"];
@@ -108,11 +82,5 @@ if (isset($_SESSION["error"])) {
             <a href="tekst.php" class="link heading">Morse code</a>
         </div>
     </header>
-    <form action="index.php" method="POST" class="morseInput">
-        <div class="voerIn">Voer hier je morse code in</div>
-        <input type="hidden" name="token" value="b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3">
-        <textarea required name="input" id="tekstInput" placeholder="Typ hier je tekst..."></textarea>
-        <input type="submit" value="Voer in" class="submitMorse">
-    </form>
 </body>
 </html>
