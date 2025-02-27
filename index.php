@@ -18,7 +18,6 @@
 
     body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
         color: #333;
     }
 
@@ -34,7 +33,7 @@
         justify-content: space-between;
         background-color: #fff;
         padding: 15px 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-bottom: 4px solid #4C88EF;
     }
 
     header img {
@@ -61,6 +60,42 @@
     .link:hover {
         color: #0056b3;
     }
+
+    .morseInput {
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .voerIn {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
+
+    textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        resize: none;
+        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        outline: none;
+    }
 </style>
 
 <body>
@@ -72,6 +107,10 @@
             <a href="tekst.php" class="link heading">Morse code</a>
         </div>
     </header>
+    <form action="index.php" method="POST" class="morseInput">
+        <div class="voerIn">Voer hier je morse code in</div>
+        <textarea name="input" id="tekstInput" placeholder="Typ hier je tekst..."></textarea>
+    </form>
 </body>
 
 </html>
