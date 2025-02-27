@@ -8,19 +8,19 @@ if ($method === "POST") {
             $_SESSION["error"] = "De token is incorrect";
         } else {
             $host = "localhost";
-            // voor Thom, verander de $username naar root, je gebruikt MAMP
-            $username = "";
-            $password = "root";
+            $username = "root";
+            // voor Thom, verander de $password naar root, je gebruikt MAMP
+            $password = "";
             // Voor Thom, verander de $database naar de databse die jij gebruikt
             $database = "web";
 
-            $connection = new mysqli($host, $username, $password);
+            $connection = new mysqli($host, $username, $password, $database);
 
             if ($connection->connect_error) {
                 throw new Exception($connection->error);
             };
 
-            
+            print_r($_POST);
         }
     } catch (Exception $e) {
         echo "de error is: " . $e->getMessage();
