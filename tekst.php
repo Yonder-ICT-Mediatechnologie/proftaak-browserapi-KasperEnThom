@@ -107,10 +107,5 @@
             <a href="tekst.php" class="link heading">Morse code</a>
         </div>
     </header>
-    <form action="index.php" method="POST" class="morseInput">
-        <div class="voerIn">Voer hier je morse code in</div>
-        <textarea name="input" id="tekstInput" placeholder="Typ hier je tekst..."></textarea>
-    </form>
 </body>
-
 </html>
