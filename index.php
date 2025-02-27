@@ -1,3 +1,40 @@
+<?php
+session_start();
+$method = $_SERVER["REQUEST_METHOD"];
+
+if ($method === "POST") {
+    try {
+        if ($_POST["token"] !== "b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3") {
+            $_SESSION["error"] = "De token is incorrect";
+        } else {
+            $host = "localhost";
+            // voor Thom, verander de $username naar root, je gebruikt MAMP
+            $username = "";
+            $password = "root";
+            // Voor Thom, verander de $database naar de databse die jij gebruikt
+            $database = "web";
+
+            $connection = new mysqli($host, $username, $password);
+
+            if ($connection->connect_error) {
+                throw new Exception($connection->error);
+            };
+
+            
+        }
+    } catch (Exception $e) {
+        echo "de error is: " . $e->getMessage();
+    }
+}
+
+
+if (isset($_SESSION["error"])) {
+    echo "<div class='error'>";
+    echo $_SESSION["error"];
+    echo "</div>";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,40 +98,65 @@
         color: #0056b3;
     }
 
+    /* Formuliercontainer */
     .morseInput {
         max-width: 600px;
-        margin: 30px auto;
-        padding: 20px;
+        margin: 50px auto;
+        padding: 25px;
         background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        gap: 10px;
-    }
-
-    .voerIn {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
+        gap: 15px;
+        border: 4px solid #007bff;
         text-align: center;
+        padding: 15px;
+        background-color: #ECECEC;
     }
 
+    /* Formulier header */
+    .voerIn {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #222;
+    }
+
+    /* Tekstvak */
     textarea {
         width: 100%;
-        height: 150px;
-        padding: 10px;
+        height: 200px;
+        padding: 12px;
         font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
+        border-radius: 8px;
         resize: none;
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        background-color: #ECECEC;
+        border: 3px solid #007bff;
     }
 
     textarea:focus {
         border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
         outline: none;
+    }
+
+    /* Verzendknop */
+    .submitMorse {
+        background-color: #007bff;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out, transform 0.2s;
+    }
+
+    .submitMorse:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
     }
 </style>
 
@@ -109,7 +171,9 @@
     </header>
     <form action="index.php" method="POST" class="morseInput">
         <div class="voerIn">Voer hier je morse code in</div>
-        <textarea name="input" id="tekstInput" placeholder="Typ hier je tekst..."></textarea>
+        <input type="hidden" name="token" value="b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3">
+        <textarea required name="input" id="tekstInput" placeholder="Typ hier je tekst..."></textarea>
+        <input type="submit" value="Voer in" class="submitMorse">
     </form>
 </body>
 
