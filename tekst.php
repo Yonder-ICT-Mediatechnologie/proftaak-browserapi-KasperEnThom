@@ -7,6 +7,38 @@ if (isset($_SESSION["error"])) {
     echo $_SESSION["error"];
     echo "</div>";
 }
+
+$host = "localhost";
+$username = "root";
+$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$database = "web"; // Voor Thom: verander naar jouw database
+
+$connection = new mysqli($host, $username, $password, $database);
+
+if ($connection->connect_error) {
+    die("Database connectiefout: " . $connection->connect_error);
+}
+
+$morseCode = '';
+if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
+    $results = str_split($_SESSION['result']);
+    $query = "SELECT symbool FROM morsepiep WHERE id = ?";
+    $statement = $connection->prepare($query);
+
+    if ($statement) {
+        foreach ($results as $result) {
+            $statement->bind_param("s", $result);
+            $statement->execute();
+            $statement->bind_result($symbool);
+
+            while ($statement->fetch()) {
+                $morseCode .= $symbool;
+            }
+        }
+        $statement->close();
+    }
+    $_SESSION['morse'] = $morseCode;
+}
 ?>
 
 <!DOCTYPE html>
@@ -84,8 +116,10 @@ if (isset($_SESSION["error"])) {
     </header>
     <div class="morse-code">
         <?php
-        if (isset($_SESSION['morse'])) {
-            echo "<p>Morse Code: " . $_SESSION['morse'] . "</p>";
+        if (!empty($morseCode)) {
+            echo "<p>Morse Code: " . htmlspecialchars($morseCode) . "</p>";
+        } else {
+            echo "<p>Geen morse code gevonden.</p>";
         }
         ?>
     </div>
@@ -123,11 +157,15 @@ if (isset($_SESSION["error"])) {
         }
 
         <?php
-        if (isset($_SESSION['morse'])) {
-            echo "playMorseCode('" . $_SESSION['morse'] . "');";
+        if (!empty($morseCode)) {
+            echo "playMorseCode('" . $morseCode . "');";
         }
         ?>
     </script>
 </body>
 
 </html>
+
+<?php
+$connection->close();
+?>
