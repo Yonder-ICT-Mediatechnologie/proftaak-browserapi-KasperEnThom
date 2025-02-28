@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -147,15 +147,19 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
             });
         }
 
-        function beep(duration) {
-            const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-            oscillator.connect(audioCtx.destination);
-            oscillator.start();
-            setTimeout(() => oscillator.stop(), duration);
-        }
+        function beep(duration, nextCallback) {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
+    setTimeout(() => {
+        oscillator.stop();
+        if (nextCallback) nextCallback();
+    }, duration);
+}
+
 
         <?php
         if (!empty($morseCode)) {
