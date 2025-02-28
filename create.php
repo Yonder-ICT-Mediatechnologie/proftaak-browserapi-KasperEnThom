@@ -34,12 +34,11 @@ if ($method === "POST") {
         $statment->execute();
 
         if ($statment->fetch()) {
-            setcookie("Error", "De letter bestaat al", time() + 10);
+            setcookie("Error", "De letter $letter bestaat al", time() + 10);
             header("location: create.php");
             exit();
-        }
-        else{
-            echo "NIGGER";
+        } else {
+            echo "test";
         }
     } catch (Exception $e) {
         echo "De error is" . $e;
@@ -47,8 +46,6 @@ if ($method === "POST") {
 }
 
 ?>
-
-
 
 
 

@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -125,49 +125,49 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
         <button onclick="playMorseCode(morseCode)">Speel Morse-code af</button>
     </div>
     <script>
-    let morseCode = "<?php echo addslashes($morseCode); ?>"; 
-</script>
+        let morseCode = "<?php echo addslashes($morseCode); ?>";
+    </script>
     <script>
         let isPlaying = false; // Voorkomt meerdere overlappende afspeelsessies
 
-    function playMorseCode(morseCode) {
-        if (isPlaying) return; // Stop als er al iets afspeelt
-        isPlaying = true; // Zet de vlag aan
+        function playMorseCode(morseCode) {
+            if (isPlaying) return; // Stop als er al iets afspeelt
+            isPlaying = true; // Zet de vlag aan
 
-        if (!morseCode) return;
-        const dotDuration = 200;
-        const dashDuration = dotDuration * 3;
-        const gapDuration = dotDuration;
-        let currentTime = 1000;
+            if (!morseCode) return;
+            const dotDuration = 200;
+            const dashDuration = dotDuration * 3;
+            const gapDuration = dotDuration;
+            let currentTime = 1000;
 
-    morseCode.split('').forEach((symbol, index) => {
-        setTimeout(() => {
-            if (symbol === '.') {
-                beep(dotDuration);
-            } else if (symbol === '-') {
-                beep(dashDuration);
-            }
-        }, currentTime);
+            morseCode.split('').forEach((symbol, index) => {
+                setTimeout(() => {
+                    if (symbol === '.') {
+                        beep(dotDuration);
+                    } else if (symbol === '-') {
+                        beep(dashDuration);
+                    }
+                }, currentTime);
 
-        currentTime += (symbol === '.' ? dotDuration : dashDuration) + gapDuration;
-    });
-    // Zet de vlag weer uit nadat alle piepjes zijn afgespeeld
-    setTimeout(() => {
-        isPlaying = false;
-    }, currentTime);
-}
+                currentTime += (symbol === '.' ? dotDuration : dashDuration) + gapDuration;
+            });
+            // Zet de vlag weer uit nadat alle piepjes zijn afgespeeld
+            setTimeout(() => {
+                isPlaying = false;
+            }, currentTime);
+        }
 
         function beep(duration, nextCallback) {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioCtx.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-    oscillator.connect(audioCtx.destination);
-    oscillator.start();
-    setTimeout(() => {
-        oscillator.stop();
-    }, duration);
-}
+            const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            setTimeout(() => {
+                oscillator.stop();
+            }, duration);
+        }
     </script>
 </body>
 

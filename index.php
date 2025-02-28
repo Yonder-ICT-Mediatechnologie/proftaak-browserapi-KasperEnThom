@@ -10,7 +10,7 @@ if ($method === "POST") {
             $host = "localhost";
             $username = "root";
             // voor Thom, verander de $password naar root, je gebruikt MAMP
-            $password = "root";
+            $password = "";
             // Voor Thom, verander de $database naar de database die jij gebruikt
             $database = "web";
 
@@ -81,7 +81,7 @@ if (isset($_SESSION["error"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoeren</title>
+    <title>Text invoeren</title>
 </head>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -222,8 +222,9 @@ if (isset($_SESSION["error"])) {
         <img src="logo.png" alt="Onze logo">
         <div class="bedrijfNaam heading">MorseXpress</div>
         <div class="links">
-            <a href="index.php" class="link heading"><b>Invoer</b></a>
+            <a href="index.php" class="link heading"><b>Voer tekst in</b></a>
             <a href="tekst.php" class="link heading">Morse code</a>
+            <a href="morseSubmit.php" class="link heading">Voer morse code in</a>
         </div>
     </header>
     <form action="index.php" method="POST" class="morseInput">
