@@ -69,7 +69,7 @@ if (isset($_SESSION["error"])) {
     echo $_SESSION["error"];
     echo "</div>";
 }
-print_r($_SESSION);
+
 ?>
 
 

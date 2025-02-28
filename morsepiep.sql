@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2025 at 10:33 AM
+-- Generation Time: Feb 28, 2025 at 09:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,16 +29,17 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `morsepiep` (
   `id` int(11) NOT NULL,
-  `lengte` varchar(255) NOT NULL
+  `lengte` varchar(255) NOT NULL,
+  `symbool` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `morsepiep`
 --
 
-INSERT INTO `morsepiep` (`id`, `lengte`) VALUES
-(1, 'kort'),
-(2, 'lang');
+INSERT INTO `morsepiep` (`id`, `lengte`, `symbool`) VALUES
+(1, 'kort', '.'),
+(2, 'lang', '-');
 
 --
 -- Indexes for dumped tables

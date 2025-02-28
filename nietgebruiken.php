@@ -45,4 +45,4 @@ try {
     echo "De error is: " . $e->getMessage();
 }
 
-var_dump($_SESSION);
+print_r($_SESSION);
