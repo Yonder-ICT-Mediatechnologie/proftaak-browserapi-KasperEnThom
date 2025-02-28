@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -126,36 +126,39 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
     </div>
     <script>
         function playMorseCode(morseCode) {
-            const dotDuration = 200; // duration of a dot
-            const dashDuration = dotDuration * 3; // duration of a dash
-            const gapDuration = dotDuration; // gap between dots and dashes
-            const letterGapDuration = dotDuration * 3; // gap between letters
-            const wordGapDuration = dotDuration * 7; // gap between words
+    if (!morseCode) return;
+    const dotDuration = 200;
+    const dashDuration = dotDuration * 3;
+    const gapDuration = dotDuration;
+    let currentTime = 4000;
 
-            let currentTime = 0;
+    morseCode.split('').forEach((symbol, index) => {
+        setTimeout(() => {
+            if (symbol === '.') {
+                beep(dotDuration);
+            } else if (symbol === '-') {
+                beep(dashDuration);
+            }
+            console.log("Beep voor:", symbol, "op tijd", currentTime);
+        }, currentTime);
 
-            morseCode.split('').forEach(symbol => {
-                if (symbol === '.') {
-                    setTimeout(() => beep(dotDuration), currentTime);
-                    currentTime += dotDuration + gapDuration;
-                } else if (symbol === '-') {
-                    setTimeout(() => beep(dashDuration), currentTime);
-                    currentTime += dashDuration + gapDuration;
-                } else if (symbol === ' ') {
-                    currentTime += wordGapDuration;
-                }
-            });
-        }
+        currentTime += (symbol === '.' ? dotDuration : dashDuration) + gapDuration;
+    });
+}
 
-        function beep(duration) {
-            const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-            oscillator.connect(audioCtx.destination);
-            oscillator.start();
-            setTimeout(() => oscillator.stop(), duration);
-        }
+        function beep(duration, nextCallback) {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
+    setTimeout(() => {
+        oscillator.stop();
+        if (nextCallback) nextCallback();
+    }, duration);
+}
+
 
         <?php
         if (!empty($morseCode)) {
