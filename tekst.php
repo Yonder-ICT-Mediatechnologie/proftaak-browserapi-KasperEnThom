@@ -125,6 +125,9 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
         <button onclick="playMorseCode(morseCode)">Speel Morse-code af</button>
     </div>
     <script>
+    let morseCode = "<?php echo addslashes($morseCode); ?>"; 
+</script>
+    <script>
         function playMorseCode(morseCode) {
     if (!morseCode) return;
     const dotDuration = 200;
