@@ -3,7 +3,7 @@ try {
     session_start();
     $_SESSION['morse'] = '';
 
-    if (empty($_SESSION['result'])) {
+    if (!isset($_SESSION['result']) || empty($_SESSION['result'])) {
         throw new Exception("Geen resultaat gevonden in de sessie.");
     }
 
@@ -11,7 +11,7 @@ try {
 
     $host = "localhost";
     $username = "root";
-    $password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+    $password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
     $database = "web"; // Voor Thom: verander naar jouw database
 
     $connection = new mysqli($host, $username, $password, $database);

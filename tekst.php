@@ -82,6 +82,52 @@ if (isset($_SESSION["error"])) {
             <a href="tekst.php" class="link heading">Morse code</a>
         </div>
     </header>
+    <div class="morse-code">
+        <?php
+        if (isset($_SESSION['morse'])) {
+            echo "<p>Morse Code: " . $_SESSION['morse'] . "</p>";
+        }
+        ?>
+    </div>
+    <script>
+        function playMorseCode(morseCode) {
+            const dotDuration = 200; // duration of a dot
+            const dashDuration = dotDuration * 3; // duration of a dash
+            const gapDuration = dotDuration; // gap between dots and dashes
+            const letterGapDuration = dotDuration * 3; // gap between letters
+            const wordGapDuration = dotDuration * 7; // gap between words
+
+            let currentTime = 0;
+
+            morseCode.split('').forEach(symbol => {
+                if (symbol === '.') {
+                    setTimeout(() => beep(dotDuration), currentTime);
+                    currentTime += dotDuration + gapDuration;
+                } else if (symbol === '-') {
+                    setTimeout(() => beep(dashDuration), currentTime);
+                    currentTime += dashDuration + gapDuration;
+                } else if (symbol === ' ') {
+                    currentTime += wordGapDuration;
+                }
+            });
+        }
+
+        function beep(duration) {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            setTimeout(() => oscillator.stop(), duration);
+        }
+
+        <?php
+        if (isset($_SESSION['morse'])) {
+            echo "playMorseCode('" . $_SESSION['morse'] . "');";
+        }
+        ?>
+    </script>
 </body>
 
 </html>

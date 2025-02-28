@@ -10,7 +10,7 @@ if ($method === "POST") {
             $host = "localhost";
             $username = "root";
             // voor Thom, verander de $password naar root, je gebruikt MAMP
-            $password = "";
+            $password = "root";
             // Voor Thom, verander de $database naar de database die jij gebruikt
             $database = "web";
 
@@ -60,7 +60,7 @@ if ($method === "POST") {
             $session->close();
         }
         // TODO veranderen
-        header('location: nietgebruiken.php');
+        header('location: tekst.php');
     }
 } elseif ($method === "GET") {
     session_destroy();
