@@ -10,7 +10,7 @@ if ($method === "POST") {
             $host = "localhost";
             $username = "root";
             // voor Thom, verander de $password naar root, je gebruikt MAMP
-            $password = "w";
+            $password = "";
             // Voor Thom, verander de $database naar de database die jij gebruikt
             $database = "web";
 

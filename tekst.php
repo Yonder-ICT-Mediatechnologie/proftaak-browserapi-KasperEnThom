@@ -130,34 +130,34 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
     const dotDuration = 200;
     const dashDuration = dotDuration * 3;
     const gapDuration = dotDuration;
-    let currentTime = 4000;
+    let currentTime = 1000;
 
-            morseCode.split('').forEach((symbol, index) => {
-                setTimeout(() => {
-                    if (symbol === '.') {
-                        beep(dotDuration);
-                    } else if (symbol === '-') {
-                        beep(dashDuration);
-                    }
-                    console.log("Beep voor:", symbol, "op tijd", currentTime);
-                }, currentTime);
+    morseCode.split('').forEach((symbol, index) => {
+        setTimeout(() => {
+            if (symbol === '.') {
+                beep(dotDuration);
+            } else if (symbol === '-') {
+                beep(dashDuration);
+            }
+            console.log("Beep voor:", symbol, "op tijd", currentTime);
+        }, currentTime);
 
-                currentTime += (symbol === '.' ? dotDuration : dashDuration) + gapDuration;
-            });
-        }
+        currentTime += (symbol === '.' ? dotDuration : dashDuration) + gapDuration;
+    });
+}
 
         function beep(duration, nextCallback) {
-            const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-            oscillator.connect(audioCtx.destination);
-            oscillator.start();
-            setTimeout(() => {
-                oscillator.stop();
-                if (nextCallback) nextCallback();
-            }, duration);
-        }
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+    oscillator.connect(audioCtx.destination);
+    oscillator.start();
+    setTimeout(() => {
+        oscillator.stop();
+        if (nextCallback) nextCallback();
+    }, duration);
+}
 
 
         <?php
