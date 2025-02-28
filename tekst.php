@@ -126,11 +126,11 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
     </div>
     <script>
         function playMorseCode(morseCode) {
-            if (!morseCode) return;
-            const dotDuration = 200;
-            const dashDuration = dotDuration * 3;
-            const gapDuration = dotDuration;
-            let currentTime = 4000;
+    if (!morseCode) return;
+    const dotDuration = 200;
+    const dashDuration = dotDuration * 3;
+    const gapDuration = dotDuration;
+    let currentTime = 4000;
 
             morseCode.split('').forEach((symbol, index) => {
                 setTimeout(() => {
