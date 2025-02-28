@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -122,6 +122,7 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
             echo "<p>Geen morse code gevonden.</p>";
         }
         ?>
+        <button onclick="playMorseCode(morseCode)">Speel Morse-code af</button>
     </div>
     <script>
         function playMorseCode(morseCode) {
@@ -147,7 +148,7 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
         }
 
         function beep(duration) {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioCtx.createOscillator();
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
