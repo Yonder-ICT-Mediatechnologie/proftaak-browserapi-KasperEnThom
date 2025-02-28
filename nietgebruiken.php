@@ -47,7 +47,6 @@ try {
     if (isset($session)) {
         $session->close();
     }
-    
 }
 
 print_r($_SESSION);

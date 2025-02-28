@@ -64,7 +64,6 @@ if ($method === "POST") {
     }
 } elseif ($method === "GET") {
     session_destroy();
-    echo "test";
 }
 
 if (isset($_SESSION["error"])) {
@@ -97,6 +96,8 @@ if (isset($_SESSION["error"])) {
     body {
         font-family: Arial, sans-serif;
         color: #333;
+        background-color: #F8F9FA;
+        line-height: 1.6;
     }
 
     .heading {
@@ -112,6 +113,7 @@ if (isset($_SESSION["error"])) {
         background-color: #fff;
         padding: 15px 20px;
         border-bottom: 4px solid #4C88EF;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     header img {
@@ -132,11 +134,13 @@ if (isset($_SESSION["error"])) {
         text-decoration: none;
         color: black;
         font-size: 1rem;
-        transition: color 0.3s ease-in-out;
+        font-weight: 500;
+        transition: color 0.3s ease-in-out, transform 0.2s;
     }
 
     .link:hover {
         color: #0056b3;
+        transform: scale(1.05);
     }
 
     /* Formuliercontainer */
@@ -152,7 +156,6 @@ if (isset($_SESSION["error"])) {
         gap: 15px;
         border: 4px solid #007bff;
         text-align: center;
-        padding: 15px;
         background-color: #ECECEC;
     }
 
@@ -172,12 +175,12 @@ if (isset($_SESSION["error"])) {
         border-radius: 8px;
         resize: none;
         transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        background-color: #ECECEC;
+        background-color: #fff;
         border: 3px solid #007bff;
     }
 
     textarea:focus {
-        border-color: #007bff;
+        border-color: #0056b3;
         box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
         outline: none;
     }
@@ -198,6 +201,19 @@ if (isset($_SESSION["error"])) {
     .submitMorse:hover {
         background-color: #0056b3;
         transform: scale(1.05);
+    }
+
+    /* Error bericht */
+    .error {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 15px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
     }
 </style>
 
