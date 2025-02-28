@@ -4,36 +4,74 @@ $method = $_SERVER["REQUEST_METHOD"];
 
 if ($method === "POST") {
     try {
-        if ($_POST["token"] !== "b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3") {
+        if (!isset($_POST["token"]) || $_POST["token"] !== "b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3") {
             $_SESSION["error"] = "De token is incorrect";
         } else {
             $host = "localhost";
             $username = "root";
             // voor Thom, verander de $password naar root, je gebruikt MAMP
             $password = "";
-            // Voor Thom, verander de $database naar de databse die jij gebruikt
+            // Voor Thom, verander de $database naar de database die jij gebruikt
             $database = "web";
 
             $connection = new mysqli($host, $username, $password, $database);
 
             if ($connection->connect_error) {
-                throw new Exception($connection->error);
-            };
+                throw new Exception("Database connectiefout: " . $connection->connect_error);
+            }
 
-            print_r($_POST);
+            $input = isset($_POST["input"]) ? $_POST["input"] : '';
+            $letters = str_split(strtolower($input));
+            $_SESSION['result'] = '';
+            $_SESSION['debug'] = '';
+            $i = 1;
+            foreach ($letters as $letter) {
+                // Gebruik een prepared statement om SQL-injectie te voorkomen
+                $query = "SELECT lengte FROM morseletter WHERE letter = ?";
+                $statement = $connection->prepare($query);
+
+                if ($statement === false) {
+                    throw new Exception("Statement preparation failed: " . $connection->error);
+                }
+
+                $statement->bind_param("s", $letter); // "s" staat voor string
+                $statement->execute();
+                $statement->bind_result($lengte);
+
+                if ($statement->fetch()) {
+                    $_SESSION['result'] .= $lengte;
+                    $_SESSION['debug'] .= $letter;
+                } else {
+                    $_SESSION["letter" . $letter] = "Niet gevonden";
+                }
+
+                $statement->close();
+
+                $i++;
+            }
         }
     } catch (Exception $e) {
-        echo "de error is: " . $e->getMessage();
+        echo "De error is: " . $e->getMessage();
+    } finally {
+        if (isset($connection)) {
+            $connection->close();
+        }
+        if (isset($session)) {
+            $session->close();
+        }
+        // TODO veranderen
+        header('location: nietgebruiken.php');
     }
 }
-
 
 if (isset($_SESSION["error"])) {
     echo "<div class='error'>";
     echo $_SESSION["error"];
     echo "</div>";
 }
+print_r($_SESSION);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
