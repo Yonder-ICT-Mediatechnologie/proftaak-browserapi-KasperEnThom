@@ -6,7 +6,8 @@ if ($method === "POST") {
     try {
         if (!isset($_POST["token"]) || $_POST["token"] !== "b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3") {
             $_SESSION["error"] = "De token is incorrect";
-        } else {
+        } 
+        else {
             $host = "localhost";
             $username = "root";
             // voor Thom, verander de $password naar root, je gebruikt MAMP
