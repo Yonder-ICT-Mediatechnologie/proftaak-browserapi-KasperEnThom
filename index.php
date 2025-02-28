@@ -62,6 +62,9 @@ if ($method === "POST") {
         // TODO veranderen
         header('location: nietgebruiken.php');
     }
+} elseif ($method === "GET") {
+    session_destroy();
+    echo "test";
 }
 
 if (isset($_SESSION["error"])) {
