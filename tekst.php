@@ -130,7 +130,7 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
     const dotDuration = 200;
     const dashDuration = dotDuration * 3;
     const gapDuration = dotDuration;
-    let currentTime = 4000;
+    let currentTime = 1000;
 
     morseCode.split('').forEach((symbol, index) => {
         setTimeout(() => {
