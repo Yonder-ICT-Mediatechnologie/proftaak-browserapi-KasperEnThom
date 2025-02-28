@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -128,12 +128,17 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
     let morseCode = "<?php echo addslashes($morseCode); ?>"; 
 </script>
     <script>
-        function playMorseCode(morseCode) {
-    if (!morseCode) return;
-    const dotDuration = 200;
-    const dashDuration = dotDuration * 3;
-    const gapDuration = dotDuration;
-    let currentTime = 1000;
+        let isPlaying = false; // Voorkomt meerdere overlappende afspeelsessies
+
+    function playMorseCode(morseCode) {
+        if (isPlaying) return; // Stop als er al iets afspeelt
+        isPlaying = true; // Zet de vlag aan
+
+        if (!morseCode) return;
+        const dotDuration = 200;
+        const dashDuration = dotDuration * 3;
+        const gapDuration = dotDuration;
+        let currentTime = 1000;
 
     morseCode.split('').forEach((symbol, index) => {
         setTimeout(() => {
@@ -142,11 +147,14 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
             } else if (symbol === '-') {
                 beep(dashDuration);
             }
-            console.log("Beep voor:", symbol, "op tijd", currentTime);
         }, currentTime);
 
         currentTime += (symbol === '.' ? dotDuration : dashDuration) + gapDuration;
     });
+    // Zet de vlag weer uit nadat alle piepjes zijn afgespeeld
+    setTimeout(() => {
+        isPlaying = false;
+    }, currentTime);
 }
 
         function beep(duration, nextCallback) {
@@ -158,16 +166,8 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
     oscillator.start();
     setTimeout(() => {
         oscillator.stop();
-        if (nextCallback) nextCallback();
     }, duration);
 }
-
-
-        <?php
-        if (!empty($morseCode)) {
-            echo "playMorseCode('" . $morseCode . "');";
-        }
-        ?>
     </script>
 </body>
 
