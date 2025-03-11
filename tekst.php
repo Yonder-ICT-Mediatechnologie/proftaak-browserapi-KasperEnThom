@@ -245,7 +245,7 @@ function beep(duration) {
         if (!empty($morseCode)) {
             echo htmlspecialchars($morseCode);
         } else {
-            echo "<p>Geen morse code gevonden.</p>";
+            echo "Geen morse code gevonden.";
         }
         ?></textarea>
         <input class="submitMorse" onclick="playMorseCode(morseCode)" value="Speel Morse-code af" type="button">
