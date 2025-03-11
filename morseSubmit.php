@@ -6,7 +6,7 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
     try {
         $host = "localhost";
         $username = "root";
-        $password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+        $password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
         $database = "web"; // Voor Thom: verander naar jouw database
 
         $connection = new mysqli($host, $username, $password, $database);
@@ -86,8 +86,8 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
             }
         }
         // Uncomment deze regels in productie
-        // header("Location: results.php");
-        // exit();
+        header("Location: tekst.php");
+        exit();
 
     } catch (Exception $e) {
         echo "<pre>De error is: " . $e->getMessage() . "</pre>";

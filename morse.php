@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);

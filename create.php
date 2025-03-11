@@ -11,7 +11,7 @@ if ($method === "POST") {
         $host = "localhost";
         $username = "root";
         // voor Thom verander naar root
-        $password = "";
+        $password = "root";
         $database = "web";
 
         $connection = new mysqli($host, $username, $password, $database);
