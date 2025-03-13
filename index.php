@@ -59,8 +59,7 @@ if ($method === "POST") {
         if (isset($session)) {
             $session->close();
         }
-        // TODO veranderen
-        header('location: tekst.php');
+        header("Location: morse.php");
     }
 } elseif ($method === "GET") {
     session_destroy();
@@ -71,6 +70,7 @@ if (isset($_SESSION["error"])) {
     echo $_SESSION["error"];
     echo "</div>";
 }
+// print_r($_SESSION);
 
 ?>
 

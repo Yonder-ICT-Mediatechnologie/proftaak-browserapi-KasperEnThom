@@ -86,9 +86,8 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
             }
         }
         // Uncomment deze regels in productie
-        // header("Location: results.php");
-        // exit();
-
+        header("Location: tekst.php");
+        exit();
     } catch (Exception $e) {
         echo "<pre>De error is: " . $e->getMessage() . "</pre>";
     } finally {
@@ -108,9 +107,9 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
 
 // Debugging - verwijder in productie
 
-echo "<pre>";
-print_r($_SESSION);
-echo "</pre>";
+// echo "<pre>";
+// print_r($_SESSION);
+// echo "</pre>";
 
 ?>
 
