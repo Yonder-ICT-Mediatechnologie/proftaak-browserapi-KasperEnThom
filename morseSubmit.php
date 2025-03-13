@@ -6,7 +6,7 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
     try {
         $host = "localhost";
         $username = "root";
-        $password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+        $password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
         $database = "web"; // Voor Thom: verander naar jouw database
 
         $connection = new mysqli($host, $username, $password, $database);
@@ -36,6 +36,10 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
         }
 
         foreach ($characters as $character) {
+            if ($character !== "-" && $character !== "." && $character !== "\\") {
+                throw new Exception("Correcte karakters niet ingevuld");
+            }
+
             if ($character === "\\") {
                 $_SESSION["letter" . $i] = $_SESSION["teken" . $i] ?? "";
                 $i++;
@@ -86,9 +90,8 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
             }
         }
         // Uncomment deze regels in productie
-        // header("Location: results.php");
-        // exit();
-
+        header("Location: tekst.php");
+        exit();
     } catch (Exception $e) {
         echo "<pre>De error is: " . $e->getMessage() . "</pre>";
     } finally {

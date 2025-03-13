@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -22,7 +22,7 @@ if ($connection->connect_error) {
 // Haal de originele tekst op uit de sessie
 $text = isset($_SESSION["text"]) ? $_SESSION["text"] : "Geen tekst gevonden.";
 
-print_r($_SESSION);
+// print_r($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -152,38 +152,38 @@ print_r($_SESSION);
 
 <body>
 
-<script>
-    let text = "<?php echo addslashes($text); ?>"; // Zorgt ervoor dat de tekst goed in JavaScript wordt geplaatst
+    <script>
+        let text = "<?php echo addslashes($text); ?>"; // Zorgt ervoor dat de tekst goed in JavaScript wordt geplaatst
 
-    function speakText() {
-        if ('speechSynthesis' in window) {
-            let utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'nl-NL'; // Nederlandse stem
-            utterance.rate = 1; // Normale snelheid
-            window.speechSynthesis.speak(utterance);
-        } else {
-            alert("Spraakfunctie wordt niet ondersteund in deze browser.");
+        function speakText() {
+            if ('speechSynthesis' in window) {
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'nl-NL'; // Nederlandse stem
+                utterance.rate = 1; // Normale snelheid
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Spraakfunctie wordt niet ondersteund in deze browser.");
+            }
         }
-    }
-</script>
+    </script>
 
-<header>
-    <img src="logo.png" alt="Ons logo">
-    <div class="bedrijfNaam heading">MorseXpress</div>
-    <div class="links">
-        <a href="index.php" class="link heading"><b>Invoer</b></a>
-        <a href="tekst.php" class="link heading">Tekst</a>
-    </div>
-</header>
+    <header>
+        <img src="logo.png" alt="Ons logo">
+        <div class="bedrijfNaam heading">MorseXpress</div>
+        <div class="links">
+            <a href="index.php" class="link heading"><b>Invoer</b></a>
+            <a href="tekst.php" class="link heading">Tekst</a>
+        </div>
+    </header>
 
-<form action="index.php" method="POST" class="textContainer">
-    <div class="voerIn">Uw tekst:</div>
-    <input type="hidden" name="token" value="b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3">
-    <textarea readonly name="input" id="textInput" placeholder="Geen tekst gevonden."><?php
-    echo htmlspecialchars($text);
-    ?></textarea>
-    <input class="speakButton" onclick="speakText()" value="Lees de tekst voor" type="button">
-</form>
+    <form action="index.php" method="POST" class="textContainer">
+        <div class="voerIn">Uw tekst:</div>
+        <input type="hidden" name="token" value="b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3">
+        <textarea readonly name="input" id="textInput" placeholder="Geen tekst gevonden."><?php
+                                                                                            echo htmlspecialchars($text);
+                                                                                            ?></textarea>
+        <input class="speakButton" onclick="speakText()" value="Lees de tekst voor" type="button">
+    </form>
 
 </body>
 
@@ -191,4 +191,5 @@ print_r($_SESSION);
 
 <?php
 $connection->close();
+session_destroy();
 ?>
