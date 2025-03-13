@@ -27,6 +27,11 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
 
     if ($statement) {
         foreach ($results as $result) {
+            if ($result == "\\") {
+                $morseCode .= "\\";
+                continue;
+            }
+
             $statement->bind_param("s", $result);
             $statement->execute();
             $statement->bind_result($symbool);
@@ -220,9 +225,16 @@ function playMorseCode(morseCode) {
 function beep(duration) {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioCtx.createOscillator();
-    oscillator.type = 'sine'; // Geluidstype
-    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); // Frequentie van de toon
-    oscillator.connect(audioCtx.destination);
+    const gainNode = audioCtx.createGain(); // Create a gain node
+
+    oscillator.type = 'sine'; 
+    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); 
+
+    gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Adjust volume (0.2 is softer)
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
     oscillator.start();
     setTimeout(() => {
         oscillator.stop();
@@ -234,8 +246,8 @@ function beep(duration) {
         <img src="logo.png" alt="Onze logo">
         <div class="bedrijfNaam heading">MorseXpress</div>
         <div class="links">
-            <a href="index.php" class="link heading"><b>Invoer</b></a>
-            <a href="tekst.php" class="link heading">Morse code</a>
+            <a href="index.php" class="link heading">Voer tekst in</a>
+            <a href="morseSubmit.php" class="link heading">Voer morse code in</a>
         </div>
     </header>
     <form action="index.php" method="POST" class="morseInput">

@@ -10,7 +10,7 @@ if (isset($_SESSION["error"])) {
 
 $host = "localhost";
 $username = "root";
-$password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
 $database = "web"; // Voor Thom: verander naar jouw database
 
 $connection = new mysqli($host, $username, $password, $database);
@@ -157,7 +157,7 @@ $text = isset($_SESSION["text"]) ? $_SESSION["text"] : "Geen tekst gevonden.";
 
         function speakText() {
             if ('speechSynthesis' in window) {
-                let utterance = new SpeechSynthesisUtterance(text);
+            let utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'nl-NL'; // Nederlandse stem
                 utterance.rate = 1; // Normale snelheid
                 window.speechSynthesis.speak(utterance);
@@ -171,8 +171,8 @@ $text = isset($_SESSION["text"]) ? $_SESSION["text"] : "Geen tekst gevonden.";
         <img src="logo.png" alt="Ons logo">
         <div class="bedrijfNaam heading">MorseXpress</div>
         <div class="links">
-            <a href="index.php" class="link heading"><b>Invoer</b></a>
-            <a href="tekst.php" class="link heading">Tekst</a>
+            <a href="index.php" class="link heading">Voer tekst in</a>
+            <a href="morseSubmit.php" class="link heading">Voer morse code in</a>
         </div>
     </header>
 

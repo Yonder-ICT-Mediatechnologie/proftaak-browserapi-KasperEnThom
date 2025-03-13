@@ -6,7 +6,7 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
     try {
         $host = "localhost";
         $username = "root";
-        $password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+        $password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
         $database = "web"; // Voor Thom: verander naar jouw database
 
         $connection = new mysqli($host, $username, $password, $database);
@@ -269,7 +269,6 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
         <div class="bedrijfNaam heading">MorseXpress</div>
         <div class="links">
             <a href="index.php" class="link heading">Voer tekst in</a>
-            <a href="tekst.php" class="link heading">Morse code</a>
             <a href="morseSubmit.php" class="link heading"><b>Voer morse code in</b></a>
         </div>
     </header>

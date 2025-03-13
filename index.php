@@ -48,6 +48,7 @@ if ($method === "POST") {
                 $statement->close();
 
                 $i++;
+                $_SESSION['result'] .= "\\";
             }
         }
     } catch (Exception $e) {
@@ -60,6 +61,7 @@ if ($method === "POST") {
             $session->close();
         }
         header("Location: morse.php");
+        // echo $_SESSION["result"];
     }
 } elseif ($method === "GET") {
     session_destroy();
@@ -223,7 +225,6 @@ if (isset($_SESSION["error"])) {
         <div class="bedrijfNaam heading">MorseXpress</div>
         <div class="links">
             <a href="index.php" class="link heading"><b>Voer tekst in</b></a>
-            <a href="tekst.php" class="link heading">Morse code</a>
             <a href="morseSubmit.php" class="link heading">Voer morse code in</a>
         </div>
     </header>
