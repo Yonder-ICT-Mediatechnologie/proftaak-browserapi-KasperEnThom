@@ -217,6 +217,11 @@ if (isset($_SESSION["error"])) {
         text-align: center;
         font-weight: bold;
     }
+    @media screen and (max-width: 940px) {
+        header {
+          flex-direction: column;
+        }
+    }
 </style>
 
 <body>

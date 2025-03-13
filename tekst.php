@@ -148,6 +148,11 @@ $text = isset($_SESSION["text"]) ? $_SESSION["text"] : "Geen tekst gevonden.";
         background-color: #0056b3;
         transform: scale(1.05);
     }
+    @media screen and (max-width: 940px) {
+        header {
+          flex-direction: column;
+        }
+    }
 </style>
 
 <body>

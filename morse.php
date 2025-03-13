@@ -186,6 +186,11 @@ if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
         text-align: center;
         font-weight: bold;
     }
+    @media screen and (max-width: 940px) {
+        header {
+          flex-direction: column;
+        }
+    }
 </style>
 
 <body>

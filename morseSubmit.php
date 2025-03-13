@@ -261,6 +261,11 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
         text-align: center;
         font-weight: bold;
     }
+    @media screen and (max-width: 940px) {
+        header {
+          flex-direction: column;
+        }
+    }
 </style>
 
 <body>
