@@ -92,9 +92,12 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
         // Uncomment deze regels in productie
         header("Location: tekst.php");
         exit();
-    } catch (Exception $e) {
-        echo "<pre>De error is: " . $e->getMessage() . "</pre>";
-    } finally {
+    } 
+    catch (Exception $e) {
+        echo "<div class='error'> De error is: " . $e->getMessage() . "</div>";
+    }
+    
+    finally {
         if (isset($statement)) {
             $statement->close();
         }

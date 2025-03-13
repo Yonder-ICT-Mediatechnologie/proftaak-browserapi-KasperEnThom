@@ -17,7 +17,7 @@ if ($method === "POST") {
             $connection = new mysqli($host, $username, $password, $database);
 
             if ($connection->connect_error) {
-                throw new Exception("Database connectiefout: " . $connection->connect_error);
+                throw new Exception( "Database connectiefout: " . $connection->connect_error);
             }
 
             $input = isset($_POST["input"]) ? $_POST["input"] : '';
