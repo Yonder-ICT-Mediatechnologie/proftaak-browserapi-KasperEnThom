@@ -228,7 +228,7 @@ if (isset($_SESSION["error"])) {
         </div>
     </header>
     <form action="index.php" method="POST" class="morseInput">
-        <div class="voerIn">Voer hier je morse code in</div>
+        <div class="voerIn">Voer hier je text in</div>
         <input type="hidden" name="token" value="b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3">
         <textarea required name="input" id="tekstInput" placeholder="Typ hier je tekst..."></textarea>
         <input type="submit" value="Voer in" class="submitMorse">
