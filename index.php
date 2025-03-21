@@ -1,77 +1,113 @@
 <?php
+// Start een nieuwe sessie of hervat de bestaande sessie
 session_start();
+// Haal de HTTP-methode op die voor het huidige verzoek wordt gebruikt
 $method = $_SERVER["REQUEST_METHOD"];
 
+// Controleer of de request methode POST is
 if ($method === "POST") {
     try {
+        // Controleer of de token bestaat en correct is
         if (!isset($_POST["token"]) || $_POST["token"] !== "b3f44c1eb885409c222fdb78c125f5e7050ce4f3d15e8b15ffe51678dd3a33d3a18dd3") {
+            // Sla een foutmelding op in de sessie als de token onjuist is
             $_SESSION["error"] = "De token is incorrect";
         } else {
+            // Database configuratie
             $host = "localhost";
             $username = "root";
-            // voor Thom, verander de $password naar root, je gebruikt MAMP
-            $password = "root";
-            // Voor Thom, verander de $database naar de database die jij gebruikt
+            $password = "";
             $database = "web";
 
+            // Maak een nieuwe MySQL database verbinding
             $connection = new mysqli($host, $username, $password, $database);
 
+            // Controleer of er een verbindingsfout is opgetreden
             if ($connection->connect_error) {
-                throw new Exception( "Database connectiefout: " . $connection->connect_error);
+                throw new Exception("Database connectiefout: " . $connection->connect_error);
             }
 
+            // Haal de ingevoerde tekst op uit het formulier of gebruik een lege string als er niets is ingevoerd
             $input = isset($_POST["input"]) ? $_POST["input"] : '';
+
+            // Splits de invoer op in individuele tekens en zet ze om naar kleine letters
             $letters = str_split(strtolower($input));
+
+            // Initialiseer de resultaatvariabele in de sessie
             $_SESSION['result'] = '';
+
+            // Initialiseer de debug variabele in de sessie
             $_SESSION['debug'] = '';
+
+            // Teller voor de letters
             $i = 1;
+
+            // Loop door elke letter uit de invoer
             foreach ($letters as $letter) {
-                // Gebruik een prepared statement om SQL-injectie te voorkomen
+                // Maak een prepared statement om SQL-injectie te voorkomen
                 $query = "SELECT lengte FROM morseletter WHERE letter = ?";
                 $statement = $connection->prepare($query);
 
+                // Controleer of het prepared statement correct is aangemaakt
                 if ($statement === false) {
                     throw new Exception("Statement preparation failed: " . $connection->error);
                 }
 
+                // Bind de letter parameter aan het prepared statement
                 $statement->bind_param("s", $letter); // "s" staat voor string
+                // Voer het prepared statement uit
                 $statement->execute();
+                // Bind het resultaat (kolom 'lengte') aan de variabele $lengte
                 $statement->bind_result($lengte);
 
+                // Haal het resultaat op
                 if ($statement->fetch()) {
+                    // Voeg de lengte toe aan het resultaat als de letter gevonden is
                     $_SESSION['result'] .= $lengte;
+                    // Voeg de letter toe aan de debug informatie
                     $_SESSION['debug'] .= $letter;
                 } else {
+                    // Sla een foutmelding op als de letter niet gevonden is
                     $_SESSION["letter" . $letter] = "Niet gevonden";
                 }
 
+                // Sluit het statement om resources vrij te geven
                 $statement->close();
 
+                // Verhoog de teller
                 $i++;
+                // Voeg een scheidingsteken toe aan het resultaat
                 $_SESSION['result'] .= "\\";
             }
         }
     } catch (Exception $e) {
+        // Toon de foutmelding als er een exception is opgetreden
         echo "De error is: " . $e->getMessage();
     } finally {
+        // Sluit de database verbinding als deze bestaat
         if (isset($connection)) {
             $connection->close();
         }
+        // Sluit de sessie als deze bestaat
         if (isset($session)) {
             $session->close();
         }
+        // Stuur de gebruiker door naar morse.php
         header("Location: morse.php");
+        // Uitgecommenteerde code om het resultaat direct te tonen
         // echo $_SESSION["result"];
     }
+    // Als de methode GET is, vernietig dan de sessie
 } elseif ($method === "GET") {
     session_destroy();
 }
 
+// Toon een foutmelding als er een error in de sessie is opgeslagen
 if (isset($_SESSION["error"])) {
     echo "<div class='error'>";
     echo $_SESSION["error"];
     echo "</div>";
 }
+// Uitgecommenteerde code om alle sessie variabelen te tonen voor debugging
 // print_r($_SESSION);
 
 ?>

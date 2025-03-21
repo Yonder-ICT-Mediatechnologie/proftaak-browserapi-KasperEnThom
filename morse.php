@@ -1,47 +1,68 @@
 <?php
+// Start een nieuwe sessie of hervat de bestaande sessie
 session_start();
+// Haal de HTTP-methode op die voor het huidige verzoek wordt gebruikt
 $method = $_SERVER["REQUEST_METHOD"];
 
+// Controleer of er een foutmelding in de sessie is opgeslagen en toon deze zo nodig
 if (isset($_SESSION["error"])) {
     echo "<div class='error'>";
     echo $_SESSION["error"];
     echo "</div>";
 }
 
+// Database configuratie
 $host = "localhost";
 $username = "root";
-$password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
-$database = "web"; // Voor Thom: verander naar jouw database
+$password = ""; // Opmerking voor Thom over wachtwoord voor MAMP
+$database = "web"; // Opmerking voor Thom over database naam
 
+// Maak een nieuwe MySQL database verbinding
 $connection = new mysqli($host, $username, $password, $database);
 
+// Controleer of de database verbinding succesvol is
 if ($connection->connect_error) {
+    // Stop de uitvoering en toon een foutmelding bij verbindingsproblemen
     die("Database connectiefout: " . $connection->connect_error);
 }
 
+// Initialiseer de variabele voor de morse code
 $morseCode = '';
+// Controleer of er een resultaat in de sessie staat en of deze niet leeg is
 if (isset($_SESSION['result']) && !empty($_SESSION['result'])) {
+    // Splits het resultaat op in individuele karakters
     $results = str_split($_SESSION['result']);
+    // Voorbereid een SQL query om symbolen op te halen uit de morsepiep tabel
     $query = "SELECT symbool FROM morsepiep WHERE id = ?";
+    // Bereid het prepared statement voor
     $statement = $connection->prepare($query);
 
+    // Controleer of het statement correct is voorbereid
     if ($statement) {
+        // Loop door elk karakter in het resultaat
         foreach ($results as $result) {
+            // Als het karakter een scheidingsteken is, voeg dit direct toe en ga door naar het volgende karakter
             if ($result == "\\") {
                 $morseCode .= "\\";
                 continue;
             }
 
+            // Bind de parameter aan het statement
             $statement->bind_param("s", $result);
+            // Voer het statement uit
             $statement->execute();
+            // Bind het resultaat aan de variabele $symbool
             $statement->bind_result($symbool);
 
+            // Haal het resultaat op en voeg het symbool toe aan de morse code
             while ($statement->fetch()) {
                 $morseCode .= $symbool;
             }
         }
+        // Sluit het statement om resources vrij te geven
         $statement->close();
     }
+    // Sla de gegenereerde morse code op in de sessie
     $_SESSION['morse'] = $morseCode;
 }
 ?>
@@ -275,5 +296,6 @@ function beep(duration) {
 </html>
 
 <?php
+// Sluit de database verbinding om resources vrij te geven
 $connection->close();
 ?>
