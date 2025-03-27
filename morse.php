@@ -14,7 +14,7 @@ if (isset($_SESSION["error"])) {
 // Database configuratie
 $host = "localhost";
 $username = "root";
-$password = ""; // Opmerking voor Thom over wachtwoord voor MAMP
+$password = "root"; // Opmerking voor Thom over wachtwoord voor MAMP
 $database = "web"; // Opmerking voor Thom over database naam
 
 // Maak een nieuwe MySQL database verbinding

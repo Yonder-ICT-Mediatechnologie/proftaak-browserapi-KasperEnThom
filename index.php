@@ -15,7 +15,7 @@ if ($method === "POST") {
             // Database configuratie
             $host = "localhost";
             $username = "root";
-            $password = "";
+            $password = "root";
             $database = "web";
 
             // Maak een nieuwe MySQL database verbinding

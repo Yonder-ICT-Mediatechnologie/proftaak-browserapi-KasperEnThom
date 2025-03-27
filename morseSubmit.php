@@ -9,7 +9,7 @@ if ($method === "POST" && isset($_POST["token"]) && $_POST["token"] === "b3f44c1
         // Database configuratie
         $host = "localhost";
         $username = "root";
-        $password = ""; // Voor Thom: verander naar 'root' als je MAMP gebruikt
+        $password = "root"; // Voor Thom: verander naar 'root' als je MAMP gebruikt
         $database = "web"; // Voor Thom: verander naar jouw database
 
         // Maak verbinding met de database
